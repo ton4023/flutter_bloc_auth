@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_login/bloc/auth/auth_bloc.dart';
 import 'package:flutter_login/bloc/login/login_bloc.dart';
 import 'package:flutter_login/bloc/login/login_event.dart';
 import 'package:flutter_login/bloc/login/login_state.dart';
 import 'package:flutter_login/repository/auth_repository.dart';
 
-
 class LoginView extends StatefulWidget {
-  const LoginView({ Key? key }) : super(key: key);
+  
+  const LoginView({Key? key}) : super(key: key);
 
   @override
   _LoginViewState createState() => _LoginViewState();
@@ -21,8 +22,10 @@ class _LoginViewState extends State<LoginView> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: BlocProvider(
-        create: (context) =>
-            LoginBloc(authRepo: context.read<AuthRepository>()),
+        create: (context) => LoginBloc(
+          authRepo: context.read<AuthRepository>(),
+          authBloc: context.read()<AuthenticationBloc>(),
+        ),
         child: Stack(
           alignment: Alignment.bottomCenter,
           children: [
@@ -78,12 +81,11 @@ class _LoginViewState extends State<LoginView> {
                 suffixIcon: IconButton(
                     icon: Icon(
                         _obscureText ? Icons.visibility : Icons.visibility_off),
-                    onPressed: (){
+                    onPressed: () {
                       setState(() {
-                        _obscureText =! _obscureText;
+                        _obscureText = !_obscureText;
                       });
-                    }
-                    ),
+                    }),
               ),
               validator: (value) =>
                   state.isValidPassword ? null : 'Password is too short',

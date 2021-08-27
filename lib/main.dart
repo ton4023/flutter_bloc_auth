@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_login/repository/auth_repository.dart';
-import 'bloc/login/login_view.dart';
+import 'screen/login_view.dart';
 
 void main() {
   runApp(MyApp());
