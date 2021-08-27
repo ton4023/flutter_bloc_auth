@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_login/bloc/form_status.dart';
 import 'package:flutter_login/bloc/login/login_bloc.dart';
 import 'package:flutter_login/bloc/login/login_event.dart';
 import 'package:flutter_login/bloc/login/login_state.dart';
@@ -96,7 +95,7 @@ class _LoginViewState extends State<LoginView> {
 
   Widget _loginButton() {
     return BlocBuilder<LoginBloc, LoginState>(builder: (context, state) {
-      return state.formStatus is FormSubmitting
+      return state.loginStatus is LoginLoading
           ? CircularProgressIndicator()
           : ElevatedButton(
               onPressed: () {
