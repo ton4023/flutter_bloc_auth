@@ -2,8 +2,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_login/bloc/auth/auth_bloc.dart';
 import 'package:flutter_login/bloc/auth/auth_event.dart';
 import 'package:flutter_login/repository/auth_repository.dart';
-import 'login_event.dart';
-import 'login_state.dart';
+import 'package:flutter_login/bloc/login/login_event.dart';
+import 'package:flutter_login/bloc/login/login_state.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
   final AuthRepository authRepository;
@@ -23,7 +23,9 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       yield state.copyWith(loginStatus: LoginLoading());
 
       try {
-        final token = await authRepository.login(state.email, state.password);
+        final token = await authRepository.login('eve.holt@reqres.in', 'cityslicka');
+        
+        //final token = await authRepository.login(state.email, state.password);
         print(token) ;
         authenticationBloc..add(LoggedIn(token: token));
 

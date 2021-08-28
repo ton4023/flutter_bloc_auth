@@ -6,15 +6,16 @@ import 'package:flutter_login/bloc/login/login_event.dart';
 import 'package:flutter_login/bloc/login/login_state.dart';
 import 'package:flutter_login/repository/auth_repository.dart';
 
-class LoginView extends StatefulWidget {
-  const LoginView({Key? key}) : super(key: key);
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({Key? key}) : super(key: key);
 
   @override
-  _LoginViewState createState() => _LoginViewState();
+  _LoginScreenState createState() => _LoginScreenState();
 }
 
-class _LoginViewState extends State<LoginView> {
+class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
+  final _authRepostiry = AuthRepository();
   bool _obscureText = true;
 
   @override
@@ -22,7 +23,7 @@ class _LoginViewState extends State<LoginView> {
     return BlocProvider(
       create: (context) => LoginBloc(
           authenticationBloc: BlocProvider.of<AuthenticationBloc>(context),
-          authRepository: context.read<AuthRepository>()),
+          authRepository: _authRepostiry),
       child: Stack(
         alignment: Alignment.bottomCenter,
         children: [
@@ -59,8 +60,8 @@ class _LoginViewState extends State<LoginView> {
                 icon: Icon(Icons.person),
                 hintText: 'Email : eve.holt@reqres.in',
               ),
-              validator: (value) =>
-                  state.isvalidUsername ? null : 'Email is too short',
+              // validator: (value) =>
+              //     state.isvalidUsername ? null : 'Email is too short',
               onChanged: (value) => context.read<LoginBloc>().add(
                     LoginEmailChanged(email: value),
                   ),
@@ -83,8 +84,8 @@ class _LoginViewState extends State<LoginView> {
                       });
                     }),
               ),
-              validator: (value) =>
-                  state.isValidPassword ? null : 'Password is too short',
+              // validator: (value) =>
+              //     state.isValidPassword ? null : 'Password is too short',
               onChanged: (value) => context.read<LoginBloc>().add(
                     LoginPasswordChanged(password: value),
                   ),
@@ -111,5 +112,4 @@ class _LoginViewState extends State<LoginView> {
         child: TextButton(
             onPressed: () {}, child: Text('คุณยังไม่มีบัญชี? สร้างบัญชี')));
   }
-
 }

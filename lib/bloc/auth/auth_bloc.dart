@@ -23,14 +23,12 @@ class AuthenticationBloc
     if (event is LoggedIn) {
       yield AuthenticationLoading();
       await authRepository.setToken(event.token);
-      print('AuthenticationAuthenticated');
       yield AuthenticationAuthenticated();
     }
 
     if (event is LoggedOut) {
       yield AuthenticationLoading();
       await authRepository.deleteToken();
-      print('AuthenticationUnauthenticated');
       yield AuthenticationUnauthenticated();
     }
   }
