@@ -6,10 +6,10 @@ import 'login_event.dart';
 import 'login_state.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
-  final AuthRepository authRepo;
-  final AuthenticationBloc authBloc;
+  final AuthRepository authRepository;
+  final AuthenticationBloc authenticationBloc;
 
-  LoginBloc({required this.authBloc, required this.authRepo, }) : super(LoginState());
+  LoginBloc( {required this.authenticationBloc, required this.authRepository, }) : super(LoginState());
 
   @override
   Stream<LoginState> mapEventToState(LoginEvent event) async* {
@@ -23,8 +23,10 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       yield state.copyWith(loginStatus: LoginLoading());
 
       try {
-        final token = await authRepo.login(state.email, state.password);
-        authBloc.add(LoggedIn(token: token));
+        final token = await authRepository.login(state.email, state.password);
+        print(token) ;
+        authenticationBloc..add(LoggedIn(token: token));
+
         yield state.copyWith(loginStatus: LoginSuccess());
       } catch (e) {
         yield state.copyWith(loginStatus: LoginFailure(e.toString()));

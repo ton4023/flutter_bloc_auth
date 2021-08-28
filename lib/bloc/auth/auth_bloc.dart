@@ -5,15 +5,15 @@ import 'package:flutter_login/repository/auth_repository.dart';
 
 class AuthenticationBloc
     extends Bloc<AuthenticationEvent, AuthenticationState> {
-  final AuthRepository authRepo;
-  AuthenticationBloc({required this.authRepo})
+  final AuthRepository authRepository;
+  AuthenticationBloc({required this.authRepository})
       : super(AuthenticationInitialized());
 
   @override
   Stream<AuthenticationState> mapEventToState(
       AuthenticationEvent event) async* {
     if (event is AppStarted) {
-      final bool hasToken = await authRepo.hasToken();
+      final bool hasToken = await authRepository.hasToken();
       if (hasToken) {
         yield AuthenticationAuthenticated();
       } else {
@@ -22,13 +22,15 @@ class AuthenticationBloc
     }
     if (event is LoggedIn) {
       yield AuthenticationLoading();
-      await authRepo.setToken(event.token);
+      await authRepository.setToken(event.token);
+      print('AuthenticationAuthenticated');
       yield AuthenticationAuthenticated();
     }
 
     if (event is LoggedOut) {
       yield AuthenticationLoading();
-      await authRepo.deleteToken();
+      await authRepository.deleteToken();
+      print('AuthenticationUnauthenticated');
       yield AuthenticationUnauthenticated();
     }
   }

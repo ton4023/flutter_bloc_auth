@@ -7,7 +7,6 @@ import 'package:flutter_login/bloc/login/login_state.dart';
 import 'package:flutter_login/repository/auth_repository.dart';
 
 class LoginView extends StatefulWidget {
-  
   const LoginView({Key? key}) : super(key: key);
 
   @override
@@ -20,19 +19,16 @@ class _LoginViewState extends State<LoginView> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: BlocProvider(
-        create: (context) => LoginBloc(
-          authRepo: context.read<AuthRepository>(),
-          authBloc: context.read()<AuthenticationBloc>(),
-        ),
-        child: Stack(
-          alignment: Alignment.bottomCenter,
-          children: [
-            _loginForm(),
-            _singupButton(),
-          ],
-        ),
+    return BlocProvider(
+      create: (context) => LoginBloc(
+          authenticationBloc: BlocProvider.of<AuthenticationBloc>(context),
+          authRepository: context.read<AuthRepository>()),
+      child: Stack(
+        alignment: Alignment.bottomCenter,
+        children: [
+          _loginForm(),
+          _singupButton(),
+        ],
       ),
     );
   }
@@ -115,4 +111,5 @@ class _LoginViewState extends State<LoginView> {
         child: TextButton(
             onPressed: () {}, child: Text('คุณยังไม่มีบัญชี? สร้างบัญชี')));
   }
+
 }
