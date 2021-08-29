@@ -26,8 +26,8 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       yield state.copyWith(loginStatus: LoginLoading());
 
       try {
-        final token = await authRepository.login('eve.holt@reqres.in', 'cityslicka');
-        //final token = await authRepository.login(state.email, state.password);
+        //final token = await authRepository.login('eve.holt@reqres.in', 'cityslicka');
+        final token = await authRepository.login(state.email, state.password);
         authenticationBloc..add(LoggedIn(token: token));
         yield state.copyWith(loginStatus: LoginSuccess());
       } catch (e) {
