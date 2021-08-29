@@ -9,7 +9,10 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   final AuthRepository authRepository;
   final AuthenticationBloc authenticationBloc;
 
-  LoginBloc( {required this.authenticationBloc, required this.authRepository, }) : super(LoginState());
+  LoginBloc({
+    required this.authenticationBloc,
+    required this.authRepository,
+  }) : super(LoginState());
 
   @override
   Stream<LoginState> mapEventToState(LoginEvent event) async* {
@@ -24,15 +27,11 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
       try {
         final token = await authRepository.login('eve.holt@reqres.in', 'cityslicka');
-        
         //final token = await authRepository.login(state.email, state.password);
-        print(token) ;
         authenticationBloc..add(LoggedIn(token: token));
-
         yield state.copyWith(loginStatus: LoginSuccess());
       } catch (e) {
         yield state.copyWith(loginStatus: LoginFailure(e.toString()));
-        print(e.toString());
       }
     }
   }

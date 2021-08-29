@@ -6,6 +6,7 @@ import 'package:flutter_login/bloc/auth/auth_state.dart';
 import 'package:flutter_login/bloc_observe.dart';
 import 'package:flutter_login/repository/auth_repository.dart';
 import 'package:flutter_login/screen/home_screen.dart';
+import 'package:flutter_login/screen/loading_screen.dart';
 import 'package:flutter_login/screen/login_screen.dart';
 
 void main() {
@@ -20,11 +21,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: testView(),
+      home: blocView(),
     );
   }
 
-  Widget testView() {
+  Widget blocView() {
     return Scaffold(
       body: BlocProvider(
         create: (context) => AuthenticationBloc(authRepository: _authRepostiry)
@@ -38,9 +39,7 @@ class MyApp extends StatelessWidget {
             return HomeScreen();
           }
           if (state is AuthenticationLoading) {
-            return Center(
-              child: CircularProgressIndicator(),
-            );
+            return LoadingScreen();
           }
           return Container();
         }),
