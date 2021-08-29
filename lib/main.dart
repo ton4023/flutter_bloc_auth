@@ -13,7 +13,7 @@ void main() {
   Bloc.observer = SimpleBlocObserver();
   runApp(MyApp());
 }
-
+ 
 class MyApp extends StatelessWidget {
   final _authRepostiry = AuthRepository();
   MyApp({Key? key}) : super(key: key);
