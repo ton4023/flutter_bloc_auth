@@ -1,4 +1,4 @@
-#Mon Aug 30 11:28:40 ICT 2021
+#Mon Aug 30 17:37:08 ICT 2021
 base.0=/home/ton/code/flutter_login/build/app/intermediates/dex/release/minifyReleaseWithR8/classes.dex
 renamed.0=classes.dex
 path.0=classes.dex
