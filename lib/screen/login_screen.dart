@@ -5,6 +5,8 @@ import 'package:flutter_login/bloc/login/login_bloc.dart';
 import 'package:flutter_login/bloc/login/login_event.dart';
 import 'package:flutter_login/bloc/login/login_state.dart';
 import 'package:flutter_login/repository/auth_repository.dart';
+import 'package:google_fonts/google_fonts.dart';
+
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -16,6 +18,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
   final _authRepostiry = AuthRepository();
+  
   bool _obscureText = true;
 
   @override
@@ -24,12 +27,22 @@ class _LoginScreenState extends State<LoginScreen> {
       create: (context) => LoginBloc(
           authenticationBloc: BlocProvider.of<AuthenticationBloc>(context),
           authRepository: _authRepostiry),
-      child: Stack(
-        alignment: Alignment.bottomCenter,
-        children: [
-          _loginForm(),
-          _singupButton(),
-        ],
+      child: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              Colors.green.shade400,
+              Colors.blue.shade500
+            ]
+          )
+        ),
+        child: Stack(
+          children: [
+            _loginForm(),
+          ],
+        ),
       ),
     );
   }
@@ -42,15 +55,50 @@ class _LoginScreenState extends State<LoginScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              SizedBox(height: 50),
+              _title(),
+              SizedBox(height: 40),
               _usernameField(),
+              SizedBox(height: 20),
               _passwordField(),
               SizedBox(
-                height: 8,
+                height: 40,
               ),
               _loginButton(),
             ],
           ),
         ));
+  }
+
+  Widget _title() {
+    return RichText(
+      textAlign: TextAlign.center,
+      text: TextSpan(
+        text: 'L',
+        style: GoogleFonts.portLligatSans(
+          textStyle: Theme.of(context).textTheme.headline4,
+          fontSize: 50,
+          fontWeight: FontWeight.w700,
+          color:Colors.amberAccent
+        ),
+        children: [
+          TextSpan(
+            text: 'og',
+            style: TextStyle(
+              color: Colors.black, 
+              fontSize: 40,
+              fontWeight:FontWeight.bold),
+          ),
+          TextSpan(
+            text: 'in',
+            style: TextStyle(
+              color: Colors.white, 
+              fontSize: 40
+              ),
+          )
+        ]
+      )
+    );
   }
 
   Widget _usernameField() {
@@ -107,9 +155,4 @@ class _LoginScreenState extends State<LoginScreen> {
     });
   }
 
-  Widget _singupButton() {
-    return SafeArea(
-        child: TextButton(
-            onPressed: () {}, child: Text('คุณยังไม่มีบัญชี? สร้างบัญชี')));
-  }
 }
